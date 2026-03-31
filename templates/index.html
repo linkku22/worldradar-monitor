@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Radar - Domain Monitor</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: #1e3a8a; color: white; padding: 20px; text-align: center; }
+        h1 { margin: 0; }
+        .controls { padding: 15px; background: #f8f9fa; text-align: center; border-bottom: 1px solid #ddd; }
+        button, input[type="submit"] { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button { background: #2563eb; color: white; }
+        button:hover { background: #1e40af; }
+        .add-form { display: inline-block; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #1e3a8a; color: white; }
+        .status { padding: 8px 15px; border-radius: 20px; font-weight: bold; text-align: center; }
+        .AMAN { background: #22c55e; color: white; }
+        .BLOKIR { background: #ef4444; color: white; }
+        .ERROR { background: #f59e0b; color: white; }
+        .WAITING { background: #64748b; color: white; }
+        .last-check { font-size: 0.9em; color: #666; }
+        footer { text-align: center; padding: 15px; color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 World Radar - Domain Monitor</h1>
+            <p>Monitoring Status Blokir Domain di Jaringan Indonesia</p>
+        </header>
+
+        <div class="controls">
+            <button onclick="window.location.href='/refresh'">🔄 Refresh Sekarang</button>
+            
+            <form class="add-form" action="/add" method="POST">
+                <input type="text" name="domain" placeholder="Tambah domain baru (contoh: contoh.com)" style="padding:10px; width:300px;" required>
+                <input type="submit" value="Tambah Domain" style="background:#16a34a; color:white;">
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Domain</th>
+                    <th>Status</th>
+                    <th>Terakhir Dicek</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in domains %}
+                <tr>
+                    <td><strong>{{ item.domain }}</strong></td>
+                    <td>
+                        <span class="status {{ item.status }}">{{ item.status }}</span>
+                    </td>
+                    <td class="last-check">{{ item.last_check }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <footer>
+            Update otomatis setiap 5 menit • Powered by Indiwtf API
+        </footer>
+    </div>
+</body>
+</html>
